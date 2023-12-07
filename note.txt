@@ -1,0 +1,4 @@
+- Install app: npx create-next-app@latest ./
+- npm install bcrypt mongodb mongoose next-auth
+- In jsconfig.json, change `@/*` to `@*`
+- To use `@apply` for tailwind in globals.css file, add .vscode folder that has 2 file settings.json and tailwind.json
