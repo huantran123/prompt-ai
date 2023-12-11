@@ -2,3 +2,11 @@
 - npm install bcrypt mongodb mongoose next-auth
 - In jsconfig.json, change `@/*` to `@*`
 - To use `@apply` for tailwind in globals.css file, add .vscode folder that has 2 file settings.json and tailwind.json
+- Override tailwind.config.js with code from https://gist.github.com/adrianhajdin/6df61c6cd5ed052dce814a765bff9032#file-tailwind-config-js
+- Get NEXTAUTH_SECRET by typing command in terminal: `openssl rand -base64 32`
+- Override next.config.js file with new code from https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing/blob/main/next.config.js
+- To make the Sign In button work, go to google cloud (https://console.cloud.google.com/apis/credentials)
+  -> Select Web client in OAuth 2.0 Client IDs section
+  -> In Authorized redirect URIs section, add new URI (http://localhost:3000/api/auth/callback/google)
+  (Source: https://next-auth.js.org/getting-started/rest-api)
+-
