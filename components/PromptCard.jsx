@@ -6,6 +6,10 @@ import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 
 const PromptCard = ({ prompt, handleTagClick, handleEdit, handleDelete }) => {
+  const {data: session} = useSession()
+  const pathName = usePathname()
+  const router = useRouter()
+
   // states
   const [copied, setCopied] = useState('')
 
@@ -50,6 +54,7 @@ const PromptCard = ({ prompt, handleTagClick, handleEdit, handleDelete }) => {
             }
             width={12}
             height={12}
+            alt='copy_button'
           />
         </div>
       </div>
@@ -62,8 +67,28 @@ const PromptCard = ({ prompt, handleTagClick, handleEdit, handleDelete }) => {
         className='font-inter text-sm blue_gradient cursor-pointer'
         onClick={() => handleTagClick && handleTagClick(prompt.tag)}
       >
-        {prompt.tag}
+        #{prompt.tag}
       </p>
+
+      {session?.user.id === prompt.creator._id && pathName==='/profile' && (
+        <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
+          {/* edit */}
+          <p
+            className='font-inter text-sm green_gradient cursor-pointer'
+            onClick={() => handleEdit(prompt)}
+          >
+            Edit
+          </p>
+
+          {/* delete */}
+          <p
+            className='font-inter text-sm orange_gradient cursor-pointer'
+            onClick={() => handleDelete(prompt)}
+          >
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   )
 }

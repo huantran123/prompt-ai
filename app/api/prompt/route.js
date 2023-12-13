@@ -5,7 +5,7 @@ export const GET = async () => {
   try {
     await connectToDB()
 
-    // create a new prompt and save it to DB
+    // get all prompts
     const prompts = await Prompt.find({}).populate('creator')
 
     return new Response(JSON.stringify(prompts), { status: 200 })
