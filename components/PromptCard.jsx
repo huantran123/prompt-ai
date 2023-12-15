@@ -20,11 +20,23 @@ const PromptCard = ({ prompt, handleTagClick, handleEdit, handleDelete }) => {
     setTimeout(() => setCopied(''), 3000)
   }
 
+  // onclick function to go to user profile
+  const handleProfileClick = () => {
+    if (prompt.creator._id === session?.user.id) {
+      router.push('/profile')
+    } else {
+      router.push(`/profile/${prompt.creator._id}?username=${prompt.creator.username}`)
+    }
+  }
+
   return (
     <div className='prompt_card'>
       {/* card header */}
       <div className='flex justify_between items-start gap-5'>
-        <div className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
+        <div
+          className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
+          onClick={handleProfileClick}
+        >
           {/* user avatar */}
           <Image
             src={prompt.creator.image}
