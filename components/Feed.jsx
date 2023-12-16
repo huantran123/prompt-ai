@@ -20,12 +20,10 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   // states
-  const [searchText, setSearchtext] = useState('')
+  const [searchText, setSearchText] = useState('')
   const [prompts, setPrompts] = useState([])
-
-  const handleSearchChange = (e) => {
-
-  }
+  const [searchTimeout, setSearchTimeout] = useState(null)
+  const [searchResults, setSearchResults] = useState([])
 
   // fetch prompts after mounting
   useEffect(() => {
@@ -39,8 +37,43 @@ const Feed = () => {
     fetchPrompts()
   }, [])
 
+  // helper function to filter prompts that match the search text
+  const filterPrompts = (searchText) => {
+    const regex = new RegExp(searchText, 'i')   // 'i' flag for case-insensitive search
+    return prompts.filter((prompt) =>
+      regex.test(prompt.creator.username) ||
+      regex.test(prompt.tag) ||
+      regex.test(prompt.prompt)
+    )
+  }
+
+  // handle search change function
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout)
+    setSearchText(e.target.value)
+
+    // debounce method
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = filterPrompts(e.target.value)
+        setSearchResults(searchResult)
+      }, 500)
+    )
+  }
+
+  // handle tag click function
+  const handleTagClick = (tag) => {
+    // display tag in search field
+    setSearchText(tag)
+
+    // filter prompts that have tag matching the selected tag
+    const filteredPrompts = filterPrompts(tag)
+    setPrompts(filteredPrompts)
+  }
+
   return (
     <section className='feed'>
+      {/* search field */}
       <form className='relative w-full flex-center'>
         <input
           type="text"
@@ -52,10 +85,18 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList
-        data={prompts}
-        handleTagClick={() => {}}
-      />
+      {/* prompt list */}
+      {searchText ? (
+        <PromptCardList
+          data={searchResults}
+          handleTagClick={handleTagClick}
+        />
+      ) : (
+        <PromptCardList
+          data={prompts}
+          handleTagClick={handleTagClick}
+        />
+      )}
     </section>
   )
 }
