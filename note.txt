@@ -5,8 +5,23 @@
 - Override tailwind.config.js with code from https://gist.github.com/adrianhajdin/6df61c6cd5ed052dce814a765bff9032#file-tailwind-config-js
 - Get NEXTAUTH_SECRET by typing command in terminal: `openssl rand -base64 32`
 - Override next.config.js file with new code from https://github.com/adrianhajdin/project_next_13_ai_prompt_sharing/blob/main/next.config.js
+
+- How to obtain Google id and google client secret:
+  * Go to https://console.cloud.google.com
+  * Create a new project or select the project
+  * Go to APIs & Services -> OAuth consent screen -> Click Create button
+  * Enter app name, email, developer contact info
+  * Go to Credentials tab -> Create Credentials -> OAuth Client ID option
+  * Select application type (Web application) -> add URI in Authroized JS origins section and Authroized redirect URIs section (both use http://localhost:3000) -> Create
+  * In the popup, copy Client ID and CLient secret
+
 - To make the Sign In button work, go to google cloud (https://console.cloud.google.com/apis/credentials)
   -> Select Web client in OAuth 2.0 Client IDs section
   -> In Authorized redirect URIs section, add new URI (http://localhost:3000/api/auth/callback/google)
   (Source: https://next-auth.js.org/getting-started/rest-api)
--
+
+- How to get MongoDB URI
+  * Go to MongoDB Atlas
+  * Create a new project -> Enter username and passowrd -> IP address: add current IP address and 0.0.0.0/0 (to access from anywhere in the world)
+  * Go to Database tab -> select the cluster -> Connect button -> Drivers tab -> Copy the connection string, replace <passoword> in the string with password entered when create the project.
+
